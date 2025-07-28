@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "input_documents": [
+      "Graph_Neural_Networks_for_COVID-19_Drug_Discovery.pdf",
+      "Graph_Neural_Networks_for_Drug_Discovery_An_Integrated_Decision_Support_Pipeline.pdf",
+      "molecular representation for drug discovery.pdf",
+      "graph neural networks for drug discovery.pdf",
+      "Drug discovery and mechanism prediction.pdf"
+    ],
+    "persona": "PhD Researcher in Computational Biology",
+    "job_to_be_done": "Prepare a comprehensive literature review focusing on methodologies, datasets, and performance benchmarks",
+    "processing_timestamp": "2025-07-28T05:19:09.132931"
+  },
+  "extracted_sections": [
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "section_title": "itchell JB (2014) Machine learning methods in chemoinformatics, Wiley",
+      "importance_rank": 1,
+      "page_number": 22
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "section_title": "u Z, Ramsundar B, Feinberg EN et\u00a0al (2018) MoleculeNet: a benchmark",
+      "importance_rank": 2,
+      "page_number": 22
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "section_title": "Page 4 of 23",
+      "importance_rank": 3,
+      "page_number": 4
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "section_title": "Page 23 of 23",
+      "importance_rank": 4,
+      "page_number": 23
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "section_title": "un M, Zhao S, Gilvary C et\u00a0al (2019) Graph convolutional networks",
+      "importance_rank": 5,
+      "page_number": 22
+    }
+  ],
+  "subsection_analysis": [
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "refined_text": "itchell JB (2014) Machine learning methods in chemoinformatics, Wiley \nInterdisciplinary Reviews: computational Molecular",
+      "page_number": 22
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "refined_text": "u Z, Ramsundar B, Feinberg EN et\u00a0al (2018) MoleculeNet: a benchmark \nfor molecular machine learning",
+      "page_number": 22
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "refined_text": "reported MoleculeNet, \na large benchmark for molecular machine learning, and \nthe evaluation results illustrated that graph-based meth-\nods\u00a0 outperformed descriptor-based methods on most \ndatasets [32]",
+      "page_number": 4
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "refined_text": "In addition, little attention was paid to several newly \nstate-of-the-art ML algorithms, such as XGBoost and \nLightGBM, which have illustrated great potentials for \nmodelling various molecular properties [39\u201342]",
+      "page_number": 4
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "refined_text": "Materials and\u00a0methods\nDatasets\nTo well compare the performance of descriptor-based \nand graph-based models, the dataset collection related \nto drug discovery used by Attentive FP was also adopted \nin this study [27]",
+      "page_number": 4
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "refined_text": "J Cheminform           (2021) 13:12 \n\t\n\u2022\n \nfast, convenient online submission\n \n\u2022\n  \nthorough peer review by experienced researchers in your \ufb01eld\n\u2022 \n \nrapid publication on acceptance\n\u2022 \n \nsupport for research data, including large and complex data types\n\u2022\n  \ngold Open Access which fosters wider collaboration and increased citations \n \nmaximum visibility for your research: over 100M website views per year \n\u2022\n  \nAt BMC, research is always in progress",
+      "page_number": 23
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "refined_text": "com/submissions\nReady to submit your research\nReady to submit your research",
+      "page_number": 23
+    },
+    {
+      "document": "molecular representation for drug discovery.pdf",
+      "refined_text": "un M, Zhao S, Gilvary C et\u00a0al (2019) Graph convolutional networks \nfor computational drug development and discovery",
+      "page_number": 22
+    }
+  ]
+}

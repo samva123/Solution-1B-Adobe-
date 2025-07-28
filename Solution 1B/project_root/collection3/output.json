@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "input_documents": [
+      "HCLTech 23-24.pdf",
+      "cognizant23.pdf",
+      "huawei 24.pdf"
+    ],
+    "persona": "Investment Analyst",
+    "job_to_be_done": "Analyze revenue trends, R&D investments, and market positioning strategies",
+    "processing_timestamp": "2025-07-28T05:20:03.673124"
+  },
+  "extracted_sections": [
+    {
+      "document": "HCLTech 23-24.pdf",
+      "section_title": "As a listed entity and a responsible corporate citizen, the",
+      "importance_rank": 1,
+      "page_number": 169
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "section_title": "-",
+      "importance_rank": 2,
+      "page_number": 150
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "section_title": "pen-ness of Business",
+      "importance_rank": 3,
+      "page_number": 190
+    },
+    {
+      "document": "huawei 24.pdf",
+      "section_title": "2024 Annual Report",
+      "importance_rank": 4,
+      "page_number": 9
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "section_title": "Financial position (Standalone)",
+      "importance_rank": 5,
+      "page_number": 115
+    }
+  ],
+  "subsection_analysis": [
+    {
+      "document": "HCLTech 23-24.pdf",
+      "refined_text": "This translates into \ndisseminating timely, accurate and relevant information that \nhelps investors in making informed investment decisions",
+      "page_number": 169
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "refined_text": "The objective of Investor \nRelations is to keep investors abreast of significant developments \nthat determine Company\u2019s overall performance while at the \nsame time addressing investor concerns",
+      "page_number": 169
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "refined_text": "Its \nproactive approach has enabled the investor community to \nbetter understand the nature of the Company\u2019s business, \nmanagement strategies and operational performance over a \nperiod of time",
+      "page_number": 169
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "refined_text": "-\nY\nFinancial\nWide ranging \nknowledge and \nfinancial skills, \noversight for risk \nmanagement and \ninternal controls and \nproficiency in financial \nmanagement and \nfinancial reporting \nprocesses",
+      "page_number": 150
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "refined_text": "Essential Indicators\n\u0014\u0011\u0003\u0003 3HUFHQWDJH\u0003RI\u00035\t'\u0003DQG\u0003FDSLWDO\u0003H[SHQGLWXUH\u0003\u000b&$3(;\f\u0003LQYHVWPHQWV\u0003LQ\u0003VSHFL\u00bfF\u0003WHFKQRORJLHV\u0003WR\u0003LPSURYH\u0003SURGXFW\u0003DQG\u0003SURFHVVHV\u00b6\u0003\nenvironmental and social impacts to total R&D and capex investments made by the entity, respectively",
+      "page_number": 190
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "refined_text": "pen-ness of Business\nProvide details of concentration of purchases and sales with trading houses, dealers, and related parties along with loans \nand advances and investment, with related parties, in the following format:\nParameters\nMetrics\nFY 2023-24\nFY 2022-23\n&RQFHQWUDWLRQ\u0003RI\u0003\nSXUFKDVH\u0003\nD\f\u0003 3XUFKDVH\u0003IURP\u0003WUDGLQJ\u0003KRXVHV\u0003DV\u0003\b\u0003RI\u0003WRWDO\u0003SXUFKDVH\u0003\n1RW\u0003$SSOLFDEOH\n1RW\u0003$SSOLFDEOH\nE\f\u0003 1XPEHU\u0003RI\u0003WUDGLQJ\u0003KRXVHV\u0003ZKHUH\u0003SXUFKDVHV\u0003DUH\u0003PDGH\u0003IURP\u0003\n1RW\u0003$SSOLFDEOH\n1RW\u0003$SSOLFDEOH\nF\f\u0003 3XUFKDVHV\u0003IURP\u0003WRS\u0003\u0014\u0013\u0003WUDGLQJ\u0003KRXVHV\u0003DV\u0003\b\u0003RI\u0003WRWDO\u0003\nSXUFKDVH\u0003IURP\u0003WUDGLQJ\u0003KRXVHV\u0003\n1RW\u0003$SSOLFDEOH\n1RW\u0003$SSOLFDEOH\n&RQFHQWUDWLRQV\u0003RI\u0003\nsales\nD\f\u0003 6DOHV\u0003WR\u0003GHDOHUV\u0012\u0003GLVWULEXWRUV\u0003DV\u0003\b\u0003RI\u0003WRWDO\u0003VDOHV\u0003\n\u0017\u0011\u0013\u0016\b\n\u0016\u0011\u001c\u001a\b\nE\f\u0003 1XPEHU\u0003RI\u0003GHDOHUV\u0012GLVWULEXWRUV\u0003WR\u0003ZKRP\u0003VDOHV\u0003DUH\u0003PDGH\n\u0014\u000f\u0019\u0016\u0018\n\u0014\u000f\u001a\u0019\u0015\nF\f\u0003 6DOHV\u0003WR\u0003WRS\u0003\u0014\u0013\u0003GHDOHUV\u0012GLVWULEXWHUV\u0003DV\u0003\b\u0003RI\u0003WRWDO\u0003VDOHV\u0003WR\u0003\nGHDOHUV\u0012GLVWULEXWRUV\n\u0015\u001b\u0011\u0015\u001a\b\n\u0015\u001a\u0011\u001b\u0017\b\n6KDUH\u0003RI\u0003537V\u0003LQ\nD\f\u0003 3XUFKDVHV\u0003\u000bSXUFKDVHV\u0003ZLWK\u0003UHODWHG\u0003SDUWLHV\u0012WRWDO\u0003SXUFKDVH\f\n\u0013\u0011\u0014\u0017\b\n\u0013\u0011\u0014\u0016\b\nE\f\u0003 6DOHV\u0003\u000b6DOHV\u0003WR\u0003UHODWHG\u0003SDUWLHV\u0012WRWDO\u0003VDOHV\f\n\u0013\u0011\u0013\u0015\b\n\u0013\u0011\u0013\u0013\b\nF\f\u0003 /RDQV\u0003DQG\u0003DGYDQFHV\u0003\u000b/RDQV\u0003DQG\u0003DGYDQFHV\u0003ZLWK\u0003UHODWHG\u0003\nSDUWLHV\u0012WRWDO\u0003/RDQV\u0003DQG\u0003DGYDQFHV\f\n\u0013\u0011\u0013\u0013\b\n\u0013\u0011\u0013\u0013\b\nG\f\u0003 ,QYHVWPHQWV\u0003\u000b,QYHVWPHQWV\u0003WR\u0003UHODWHG\u0003SDUWLHV\u0012WRWDO\u0003\n,QYHVWPHQWV\u0003PDGH\f\n\u0013\u0011\u0013\u0013\b\n\u0013\u0011\u0013\u0013\b\nLeadership Indicators\n1",
+      "page_number": 190
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "refined_text": "FY 2023-24 \n(r in Crore)\nFY 2022-23 \n(r in Crore)\nDetails of improvements in environmental and social \nimpacts\n5\t'\n\u000b\u0014\u000f\u0019\u0018\u0014\f\n\u0014\u0013\u0013\b\u0003\n\u000b\u0014\u000f\u0019\u0016\u0015\f\n\u0014\u0013\u0013\b\n5\t'\u0003 LQYHVWPHQWV\u0003 DUH\u0003 PDGH\u0003 WR\u0003 HQKDQFH\u0003 WKH\u0003 H\u1087HFWLYHQHVV\u0003 RI\u0003\nRXU\u0003 SURGXFWV\u0003 DQG\u0003 VHUYLFHV\u000f\u0003 DV\u0003 ZHOO\u0003 DV\u0003 WR\u0003 GHYHORS\u0003 QHZ\u0003 RQHV\u0011\u0003\n8SJUDGLQJ\u0003 OHJDF\\\u0003 FRGHV\u0003 LPSURYHV\u0003 SHUIRUPDQFH\u0003 H\u1088FLHQF\\\u000f\u0003\nUHVXOWLQJ\u0003 LQ\u0003 HQYLURQPHQWDO\u0003 EHQH\u00bfWV\u0011\u0003 $GGLWLRQDOO\\\u000f\u0003 ZH\u0003 VWULYH\u0003 WR\u0003\nLPSURYH\u0003RXU\u0003SURGXFWV\u0003WR\u0003SURYLGH\u0003EHWWHU\u0003VHFXULW\\\u0003DQG\u0003SULYDF\\\u0011\n&DSH[\n\u000b\u0014\u000f\u0013\u0017\u001b\f\u0003\n\u0014\u0013\u0013\b\u0003\n\u000b\u0014\u000f\u0019\u0019\u0014\f\n\u0014\u0013\u0013\b\u0003\n2XU\u0003FDSH[\u0003SULPDULO\\\u0003IRFXVVHV\u0003RQ\u0003LQIUDVWUXFWXUH\u000f\u0003ZKLFK\u0003LPSURYHV\u0003\nRXU\u0003HQHUJ\\\u0003H\u1088FLHQF\\\u0003DQG\u0003DFFHVVLELOLW\\\u0003WKURXJK\u0003EHWWHU\u0003HTXLSPHQW\u0003\nDQG\u0003EXLOGLQJV\u0011",
+      "page_number": 190
+    },
+    {
+      "document": "huawei 24.pdf",
+      "refined_text": "2024 Annual Report\n        07\nFive-Year Financial Highlights\n2024\n2023\n2022\n2021\n2020\n(USD Million)\n(CNY Million)\n(CNY Million)\nRevenue\n118,162\n862,072\n704,174\n642,338\n636,807\n891,368\nOperating profit\n10,878\n79,361\n104,401\n42,216\n121,412\n72,501\nOperating margin\n9",
+      "page_number": 9
+    },
+    {
+      "document": "huawei 24.pdf",
+      "refined_text": "1%\nNet profit\n8,577\n62,574\n86,950\n35,562\n113,718\n64,649\nCash flow from \noperating activities\n12,119\n88,417\n69,807\n17,797\n59,670\n35,218\nCash and short-term \ninvestments\n51,021\n372,232\n475,317\n373,452\n416,334\n357,366\nWorking capital\n43,749\n319,178\n421,662\n344,938\n376,923\n299,062\nTotal assets\n176,837\n1,290,149\n1,263,597\n1,063,804\n982,971\n876,854\nTotal borrowings\n36,305\n264,871\n308,414\n197,144\n175,100\n141,811\nEquity\n74,649\n544,619\n507,568\n437,076\n414,652\n330,408\nLiability ratio\n57",
+      "page_number": 9
+    },
+    {
+      "document": "huawei 24.pdf",
+      "refined_text": "CAGR: (1)%\n636,807 642,338\n862,072\n891,368\n0\n200,000\n400,000\n600,000\n800,000\n1,000,000\n20\n21\n22\n23\n24\n704,174\nCAGR: 2%\n121,412\n42,216\n79,361\n72,501\n0\n20,000\n40,000\n60,000\n80,000\n100,000\n120,000\n140,000\n20\n21\n22\n23\n24\n104,401\nCAGR: 26%\n59,670\n17,797\n88,417\n35,218\n0\n20,000\n40,000\n60,000\n80,000\n100,000\n20\n21\n22\n23\n24\n69,807\nCNY Million\nCNY Million\nCNY Million\nRevenue\nOperating pro\ufb01t\nCash \ufb02ow from \noperating activities",
+      "page_number": 9
+    },
+    {
+      "document": "HCLTech 23-24.pdf",
+      "refined_text": "Financial position (Standalone)\n(in \u20b9 Crores)\nAs at\n31 March 2024\n31 March 2023\nAssets\n(a) Property, plant and equipment\n3,225\n3,727\n(b) Capital work in progress\n22\n21\n(c) Right-of-use assets\n1,048\n824\n(d) Goodwill\n6,549\n6,549\n(e) Other intangible assets\n5,511\n6,835\n(f) Other non-current assets\n6,407\n6,833\n(g) Current assets\n29,545\n28,571\nTotal assets\n52,307\n53,360\nEquity\n(a) Equity share capital\n543\n543\n(b) Other equity\n38,927\n40,561\nTotal equity\n39,470\n41,104\nLiabilities\n(a) Non-current liabilities\n2,373\n1,589\n(b) Current liabilities\n10,464\n10,667\nTotal equity and liabilities\n52,307\n53,360\nManagement Discussion and Analysis (MDA)\n113",
+      "page_number": 115
+    }
+  ]
+}

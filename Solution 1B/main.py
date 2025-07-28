@@ -1,12 +1,6 @@
-#!/usr/bin/env python3
-"""
-Persona-Driven Document Intelligence System
-Main processing script for extracting and ranking document sections
-"""
-
 import json
 import os
-import sys
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
@@ -14,326 +8,310 @@ import warnings
 warnings.filterwarnings("ignore")
 
 import PyPDF2
-import numpy as np
+import fitz  # pymupdf
 from sentence_transformers import SentenceTransformer
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 from transformers import pipeline, AutoTokenizer, AutoModel
 import torch
-import re
-from collections import defaultdict
 
-class DocumentIntelligenceSystem:
-    def __init__(self, model_name="all-MiniLM-L6-v2"):
-        """Initialize the system with a lightweight sentence transformer"""
-        print("Loading sentence transformer model...")
-        self.sentence_model = SentenceTransformer(model_name)
+class DocumentAnalyzer:
+    def __init__(self):
+        print("Loading models...")
         
-        print("Loading summarization pipeline...")
-        # Use a lightweight summarization model
+        # Load lightweight sentence transformer model
+        # self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
+        self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2', local_files_only=True)
+
+        
+        # Load lightweight text generation model for analysis
+        # self.summarizer = pipeline(
+        #     "summarization",
+        #     model="facebook/bart-large-cnn",
+        #     tokenizer="facebook/bart-large-cnn",
+        #     device=-1  # CPU only
+        # )
         self.summarizer = pipeline(
-            "summarization", 
+            "summarization",
             model="facebook/bart-large-cnn",
-            device=-1  # CPU only
+            tokenizer="facebook/bart-large-cnn",
+            device=-1,
+            local_files_only=True
         )
-        
+
         print("Models loaded successfully!")
     
     def extract_text_from_pdf(self, pdf_path: str) -> Dict[int, str]:
-        """Extract text from PDF by page"""
+        """Extract text from PDF with page numbers"""
         page_texts = {}
+        
         try:
-            with open(pdf_path, 'rb') as file:
-                pdf_reader = PyPDF2.PdfReader(file)
-                for page_num, page in enumerate(pdf_reader.pages, 1):
-                    text = page.extract_text()
-                    if text.strip():
-                        page_texts[page_num] = text.strip()
+            # Use PyMuPDF for better text extraction
+            doc = fitz.open(pdf_path)
+            for page_num in range(len(doc)):
+                page = doc.load_page(page_num)
+                text = page.get_text()
+                if text.strip():
+                    page_texts[page_num + 1] = text.strip()
+            doc.close()
         except Exception as e:
-            print(f"Error extracting text from {pdf_path}: {e}")
+            print(f"Error with PyMuPDF for {pdf_path}: {e}")
+            # Fallback to PyPDF2
+            try:
+                with open(pdf_path, 'rb') as file:
+                    reader = PyPDF2.PdfReader(file)
+                    for page_num, page in enumerate(reader.pages):
+                        text = page.extract_text()
+                        if text.strip():
+                            page_texts[page_num + 1] = text.strip()
+            except Exception as e2:
+                print(f"Error with PyPDF2 for {pdf_path}: {e2}")
+        
         return page_texts
     
-    def identify_sections(self, text: str, page_num: int) -> List[Dict]:
-        """Identify sections within a page using pattern matching"""
+    def segment_text_into_sections(self, text: str, page_num: int) -> List[Dict]:
+        """Segment text into logical sections"""
         sections = []
         
-        # Common section patterns
+        # Split by common section indicators
         patterns = [
-            r'^([A-Z][A-Za-z\s&-]{3,50})\n',  # Title case headings
-            r'^\d+\.\s*([A-Za-z][A-Za-z\s&-]{3,50})\n',  # Numbered sections
-            r'^([A-Z\s]{3,30})\n',  # ALL CAPS headings
-            r'^\*\*([A-Za-z][A-Za-z\s&-]{3,50})\*\*',  # Bold headings
-            r'^#\s*([A-Za-z][A-Za-z\s&-]{3,50})\n',  # Markdown-style headings
+            r'\n\s*(?=[A-Z][A-Za-z\s]{10,})\n',  # Title-like patterns
+            r'\n\s*\d+\.\s+[A-Z]',  # Numbered sections
+            r'\n\s*[A-Z][A-Z\s]+\n',  # All caps headers
+            r'\n\s*(?:Chapter|Section|Part)\s+\d+',  # Explicit chapters/sections
         ]
         
-        lines = text.split('\n')
-        current_section = None
-        current_content = []
+        # Try to split by patterns
+        segments = [text]
+        for pattern in patterns:
+            new_segments = []
+            for segment in segments:
+                new_segments.extend(re.split(pattern, segment))
+            segments = new_segments
         
-        for i, line in enumerate(lines):
-            line = line.strip()
-            if not line:
-                continue
+        # Clean and create sections
+        for i, segment in enumerate(segments):
+            segment = segment.strip()
+            if len(segment) > 100:  # Minimum length for a section
+                # Extract potential title (first line or first sentence)
+                lines = segment.split('\n')
+                title = lines[0][:100] + "..." if len(lines[0]) > 100 else lines[0]
                 
-            # Check if line matches section pattern
-            is_section_header = False
-            for pattern in patterns:
-                match = re.match(pattern, line)
-                if match:
-                    # Save previous section
-                    if current_section and current_content:
-                        sections.append({
-                            'title': current_section,
-                            'content': '\n'.join(current_content),
-                            'page_number': page_num,
-                            'start_line': i - len(current_content),
-                            'end_line': i
-                        })
-                    
-                    current_section = match.group(1).strip()
-                    current_content = []
-                    is_section_header = True
-                    break
-            
-            if not is_section_header and current_section:
-                current_content.append(line)
-        
-        # Add final section
-        if current_section and current_content:
-            sections.append({
-                'title': current_section,
-                'content': '\n'.join(current_content),
-                'page_number': page_num,
-                'start_line': len(lines) - len(current_content),
-                'end_line': len(lines)
-            })
-        
-        # If no sections found, treat entire page as one section
-        if not sections and text.strip():
-            # Extract a title from first meaningful line
-            first_lines = [line.strip() for line in lines[:5] if line.strip()]
-            title = first_lines[0] if first_lines else f"Page {page_num} Content"
-            if len(title) > 100:
-                title = title[:97] + "..."
-            
-            sections.append({
-                'title': title,
-                'content': text,
-                'page_number': page_num,
-                'start_line': 0,
-                'end_line': len(lines)
-            })
+                sections.append({
+                    'title': title.strip(),
+                    'content': segment,
+                    'page_number': page_num,
+                    'word_count': len(segment.split())
+                })
         
         return sections
     
-    def create_persona_query(self, persona: str, job_to_be_done: str) -> str:
-        """Create a query representing the persona's needs"""
-        return f"{persona} needs to {job_to_be_done}. Focus on relevant tools, procedures, and best practices."
+    def create_persona_job_embedding(self, persona: str, job: str) -> np.ndarray:
+        """Create embedding for persona and job combination"""
+        combined_text = f"Role: {persona}. Task: {job}"
+        return self.sentence_model.encode([combined_text])[0]
     
-    def calculate_relevance_score(self, section_content: str, persona_query: str) -> float:
-        """Calculate relevance score using sentence embeddings"""
-        try:
-            # Create embeddings
-            section_embedding = self.sentence_model.encode([section_content])
-            query_embedding = self.sentence_model.encode([persona_query])
-            
-            # Calculate cosine similarity
-            similarity = np.dot(section_embedding[0], query_embedding[0]) / (
-                np.linalg.norm(section_embedding[0]) * np.linalg.norm(query_embedding[0])
-            )
-            
-            return float(similarity)
-        except Exception as e:
-            print(f"Error calculating relevance: {e}")
-            return 0.0
+    def rank_sections_by_relevance(self, sections: List[Dict], persona_job_embedding: np.ndarray) -> List[Dict]:
+        """Rank sections by relevance to persona and job"""
+        if not sections:
+            return []
+        
+        # Create embeddings for all sections
+        section_texts = [f"{section['title']} {section['content'][:500]}" for section in sections]
+        section_embeddings = self.sentence_model.encode(section_texts)
+        
+        # Calculate similarity scores
+        similarities = cosine_similarity([persona_job_embedding], section_embeddings)[0]
+        
+        # Add similarity scores to sections
+        for i, section in enumerate(sections):
+            section['relevance_score'] = float(similarities[i])
+        
+        # Sort by relevance score
+        ranked_sections = sorted(sections, key=lambda x: x['relevance_score'], reverse=True)
+        
+        return ranked_sections
     
-    def extract_key_subsections(self, content: str, max_length: int = 200) -> str:
-        """Extract key information from content using summarization"""
-        try:
-            if len(content) < 50:
-                return content
-            
-            # Split into sentences and select most relevant ones
-            sentences = re.split(r'[.!?]+', content)
-            sentences = [s.strip() for s in sentences if s.strip() and len(s.strip()) > 10]
-            
-            if not sentences:
-                return content[:max_length]
-            
-            # If content is short enough, return as is
-            if len(content) <= max_length:
-                return content
-            
-            # Use extractive approach for longer content
-            if len(sentences) <= 3:
-                return '. '.join(sentences[:3])
-            
-            # Select key sentences based on position and length
-            key_sentences = []
-            
-            # Always include first sentence if it's informative
-            if sentences and len(sentences[0]) > 20:
-                key_sentences.append(sentences[0])
-            
-            # Add middle sentences that contain important keywords
-            important_keywords = ['create', 'form', 'tool', 'enable', 'fill', 'sign', 'field', 'select', 'click', 'choose']
-            for sentence in sentences[1:-1]:
-                if any(keyword in sentence.lower() for keyword in important_keywords):
-                    key_sentences.append(sentence)
-                    if len('. '.join(key_sentences)) > max_length:
-                        break
-            
-            # If we have room, add the last sentence
-            if len(key_sentences) < 3 and sentences:
-                key_sentences.append(sentences[-1])
-            
-            result = '. '.join(key_sentences)
-            if len(result) > max_length:
-                result = result[:max_length-3] + "..."
-            
-            return result
-            
-        except Exception as e:
-            print(f"Error extracting subsections: {e}")
-            return content[:max_length]
+    def extract_key_subsections(self, section_content: str, persona: str, job: str) -> List[str]:
+        """Extract key subsections from a section"""
+        # Split into paragraphs or sentences
+        sentences = re.split(r'[.!?]+', section_content)
+        sentences = [s.strip() for s in sentences if len(s.strip()) > 50]
+        
+        if not sentences:
+            return [section_content[:500]]
+        
+        # Create persona-job context
+        context = f"For a {persona} who needs to {job}, the most relevant information is:"
+        
+        # Score sentences by relevance
+        persona_job_embedding = self.sentence_model.encode([context])
+        sentence_embeddings = self.sentence_model.encode(sentences)
+        
+        similarities = cosine_similarity(persona_job_embedding, sentence_embeddings)[0]
+        
+        # Get top sentences
+        scored_sentences = list(zip(sentences, similarities))
+        scored_sentences.sort(key=lambda x: x[1], reverse=True)
+        
+        # Return top 3 most relevant subsections
+        top_subsections = [sent for sent, score in scored_sentences[:3]]
+        
+        return top_subsections
     
-    def process_documents(self, collection_path: str) -> Dict[str, Any]:
-        """Process all documents in a collection"""
+    def process_collection(self, collection_path: str) -> Dict[str, Any]:
+        """Process a single collection folder"""
         collection_path = Path(collection_path)
         
-        # Load input configuration
+        # Load input.json
         input_file = collection_path / "input.json"
         if not input_file.exists():
             raise FileNotFoundError(f"input.json not found in {collection_path}")
         
         with open(input_file, 'r') as f:
-            config = json.load(f)
+            input_data = json.load(f)
         
-        # Extract configuration
-        persona = config["persona"]["role"]
-        job_to_be_done = config["job_to_be_done"]["task"]
-        documents = config["documents"]
+        # Extract persona and job
+        persona = input_data['persona']['role']
+        job = input_data['job_to_be_done']['task']
         
-        print(f"Processing {len(documents)} documents for {persona}")
-        print(f"Job to be done: {job_to_be_done}")
+        print(f"Processing collection: {collection_path.name}")
+        print(f"Persona: {persona}")
+        print(f"Job: {job}")
         
-        # Create persona query
-        persona_query = self.create_persona_query(persona, job_to_be_done)
-        print(f"Persona query: {persona_query}")
+        # Create persona-job embedding
+        persona_job_embedding = self.create_persona_job_embedding(persona, job)
         
-        # Process each document
+        # Process all PDFs
         all_sections = []
-        pdfs_path = collection_path / "pdfs"
+        pdfs_folder = collection_path / "pdfs"
         
-        for doc_info in documents:
-            filename = doc_info["filename"]
-            pdf_path = pdfs_path / filename
-            
+        if not pdfs_folder.exists():
+            raise FileNotFoundError(f"pdfs folder not found in {collection_path}")
+        
+        for doc_info in input_data['documents']:
+            pdf_path = pdfs_folder / doc_info['filename']
             if not pdf_path.exists():
-                print(f"Warning: {pdf_path} not found")
+                print(f"Warning: {pdf_path} not found, skipping...")
                 continue
             
-            print(f"Processing {filename}...")
+            print(f"Processing: {doc_info['filename']}")
             
-            # Extract text by page
+            # Extract text from PDF
             page_texts = self.extract_text_from_pdf(str(pdf_path))
             
             # Process each page
             for page_num, text in page_texts.items():
-                sections = self.identify_sections(text, page_num)
-                
+                sections = self.segment_text_into_sections(text, page_num)
                 for section in sections:
-                    # Calculate relevance score
-                    relevance_score = self.calculate_relevance_score(
-                        section['content'], persona_query
-                    )
-                    
-                    section_data = {
-                        'document': filename,
-                        'section_title': section['title'],
-                        'page_number': page_num,
-                        'content': section['content'],
-                        'relevance_score': relevance_score
-                    }
-                    
-                    all_sections.append(section_data)
+                    section['document'] = doc_info['filename']
+                    all_sections.append(section)
         
-        # Sort by relevance score
-        all_sections.sort(key=lambda x: x['relevance_score'], reverse=True)
+        print(f"Total sections extracted: {len(all_sections)}")
         
-        # Select top 5 sections
-        top_sections = all_sections[:5]
+        # Rank sections by relevance
+        ranked_sections = self.rank_sections_by_relevance(all_sections, persona_job_embedding)
         
-        # Create extracted sections output
-        extracted_sections = []
-        for i, section in enumerate(top_sections, 1):
-            extracted_sections.append({
-                "document": section['document'],
-                "section_title": section['section_title'],
-                "importance_rank": i,
-                "page_number": section['page_number']
-            })
+        # Select top 5 most relevant sections
+        top_sections = ranked_sections[:5]
         
-        # Create subsection analysis
-        subsection_analysis = []
-        for section in top_sections:
-            refined_text = self.extract_key_subsections(section['content'])
-            subsection_analysis.append({
-                "document": section['document'],
-                "refined_text": refined_text,
-                "page_number": section['page_number']
-            })
-        
-        # Create output structure
+        # Generate output
         output = {
             "metadata": {
-                "input_documents": [doc["filename"] for doc in documents],
+                "input_documents": [doc['filename'] for doc in input_data['documents']],
                 "persona": persona,
-                "job_to_be_done": job_to_be_done,
+                "job_to_be_done": job,
                 "processing_timestamp": datetime.now().isoformat()
             },
-            "extracted_sections": extracted_sections,
-            "subsection_analysis": subsection_analysis
+            "extracted_sections": [],
+            "subsection_analysis": []
         }
         
-        return output
-
-def main():
-    """Main function to process collections"""
-    if len(sys.argv) != 2:
-        print("Usage: python main.py <collections_root_path>")
-        sys.exit(1)
-    
-    collections_root = Path(sys.argv[1])
-    
-    if not collections_root.exists():
-        print(f"Collections root path {collections_root} does not exist")
-        sys.exit(1)
-    
-    # Initialize the system
-    system = DocumentIntelligenceSystem()
-    
-    # Process each collection
-    for collection_dir in collections_root.iterdir():
-        if collection_dir.is_dir() and collection_dir.name.startswith('collection'):
-            print(f"\n{'='*50}")
-            print(f"Processing {collection_dir.name}")
-            print(f"{'='*50}")
+        # Process top sections
+        for rank, section in enumerate(top_sections, 1):
+            # Add to extracted_sections
+            output["extracted_sections"].append({
+                "document": section['document'],
+                "section_title": section['title'],
+                "importance_rank": rank,
+                "page_number": section['page_number']
+            })
             
+            # Extract key subsections
+            key_subsections = self.extract_key_subsections(
+                section['content'], persona, job
+            )
+            
+            # Add to subsection_analysis
+            for subsection in key_subsections:
+                output["subsection_analysis"].append({
+                    "document": section['document'],
+                    "refined_text": subsection.strip(),
+                    "page_number": section['page_number']
+                })
+        
+        return output
+    
+    def run_analysis(self, project_root: str):
+        """Run analysis on all collections in the project"""
+        project_root = Path(project_root)
+        
+        # Find all collection folders
+        collection_folders = [
+            folder for folder in project_root.iterdir() 
+            if folder.is_dir() and folder.name.startswith('collection')
+        ]
+        
+        if not collection_folders:
+            print("No collection folders found!")
+            return
+        
+        print(f"Found {len(collection_folders)} collections")
+        
+        for collection_folder in collection_folders:
             try:
-                # Process the collection
-                output = system.process_documents(collection_dir)
+                print(f"\n{'='*50}")
+                print(f"Processing {collection_folder.name}")
+                print(f"{'='*50}")
                 
-                # Save output
-                output_file = collection_dir / "output.json"
+                output = self.process_collection(collection_folder)
+                
+                # Save output.json
+                output_file = collection_folder / "output.json"
                 with open(output_file, 'w') as f:
-                    json.dump(output, f, indent=4)
+                    json.dump(output, f, indent=2)
                 
-                print(f"✅ Successfully processed {collection_dir.name}")
-                print(f"📄 Output saved to {output_file}")
+                print(f"✅ Successfully processed {collection_folder.name}")
+                print(f"📄 Output saved to: {output_file}")
                 
             except Exception as e:
-                print(f"❌ Error processing {collection_dir.name}: {e}")
-                import traceback
-                traceback.print_exc()
+                print(f"❌ Error processing {collection_folder.name}: {e}")
+                continue
+
+def main():
+    """Main function to run the document analyzer"""
+    import sys
+    
+    if len(sys.argv) < 2:
+        print("Usage: python main.py <project_root_path>")
+        print("Example: python main.py /path/to/project")
+        return
+    
+    project_root = sys.argv[1]
+    
+    if not os.path.exists(project_root):
+        print(f"Error: Project root path '{project_root}' does not exist!")
+        return
+    
+    try:
+        analyzer = DocumentAnalyzer()
+        analyzer.run_analysis(project_root)
+        print("\n🎉 Analysis completed successfully!")
+        
+    except Exception as e:
+        print(f"❌ Fatal error: {e}")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     main()

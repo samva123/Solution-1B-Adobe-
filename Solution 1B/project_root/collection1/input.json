@@ -1,0 +1,35 @@
+{
+    "challenge_info": {
+        "challenge_id": "round_1b_chem_001",
+        "test_case_name": "extract_reaction_kinetics_concepts",
+        "description": "Extract key reaction kinetics concepts and mechanisms for exam preparation"
+    },
+    "documents": [
+        {
+            "filename": "Haloalkanes and Haloarenes.pdf",
+            "title": "Haloalkanes and Haloarenes"
+        },
+        {
+            "filename": "Alcohols, Phenols and Ethers.pdf",
+            "title": "Alcohols, Phenols and Ethers"
+        },
+        {
+            "filename": "Aldehydes, Ketons and Carboxylic Acids.pdf",
+            "title": "Aldehydes, Ketons and Carboxylic Acids"
+        },
+        {
+            "filename": "Amines.pdf",
+            "title": "Amines"
+        },
+        {
+            "filename": "Chemical Kinetics.pdf",
+            "title": "Chemical Kinetics"
+        }
+    ],
+    "persona": {
+        "role": "Undergraduate Chemistry Student"
+    },
+    "job_to_be_done": {
+        "task": "Identify key concepts and mechanisms for exam preparation on reaction kinetics"
+    }
+}

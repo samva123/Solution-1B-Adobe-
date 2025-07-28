@@ -1,0 +1,35 @@
+{
+    "challenge_info": {
+        "challenge_id": "round_1b_bio_001",
+        "test_case_name": "literature_review_gnn_drug_discovery",
+        "description": "Prepare a comprehensive literature review focusing on methodologies, datasets, and performance benchmarks in GNN-based drug discovery"
+    },
+    "documents": [
+        {
+            "filename": "Graph_Neural_Networks_for_COVID-19_Drug_Discovery.pdf",
+            "title": "Graph Neural Networks for COVID-19 Drug Discovery"
+        },
+        {
+            "filename": "Graph_Neural_Networks_for_Drug_Discovery_An_Integrated_Decision_Support_Pipeline.pdf",
+            "title": "Graph Neural Networks for Drug Discovery: An Integrated Decision Support Pipeline"
+        },
+        {
+            "filename": "molecular representation for drug discovery.pdf",
+            "title": "Molecular Representation for Drug Discovery"
+        },
+        {
+            "filename": "graph neural networks for drug discovery.pdf",
+            "title": "Graph Neural Networks for Drug Discovery"
+        },
+        {
+            "filename": "Drug discovery and mechanism prediction.pdf",
+            "title": "Drug Discovery and Mechanism Prediction"
+        }
+    ],
+    "persona": {
+        "role": "PhD Researcher in Computational Biology"
+    },
+    "job_to_be_done": {
+        "task": "Prepare a comprehensive literature review focusing on methodologies, datasets, and performance benchmarks"
+    }
+}

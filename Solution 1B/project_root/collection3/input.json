@@ -1,0 +1,27 @@
+{
+    "challenge_info": {
+        "challenge_id": "round_1b_fin_001",
+        "test_case_name": "analyze_tech_firm_financials",
+        "description": "Analyze revenue trends, R&D investments, and market positioning strategies of selected tech firms"
+    },
+    "documents": [
+        {
+            "filename": "HCLTech 23-24.pdf",
+            "title": "HCLTech Annual Report 2023-2024"
+        },
+        {
+            "filename": "cognizant23.pdf",
+            "title": "Cognizant Annual Report 2023"
+        },
+        {
+            "filename": "huawei 24.pdf",
+            "title": "Huawei Annual Report 2024"
+        }
+    ],
+    "persona": {
+        "role": "Investment Analyst"
+    },
+    "job_to_be_done": {
+        "task": "Analyze revenue trends, R&D investments, and market positioning strategies"
+    }
+}

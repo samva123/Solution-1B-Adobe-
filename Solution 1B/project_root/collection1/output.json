@@ -1,0 +1,123 @@
+{
+  "metadata": {
+    "input_documents": [
+      "Haloalkanes and Haloarenes.pdf",
+      "Alcohols, Phenols and Ethers.pdf",
+      "Aldehydes, Ketons and Carboxylic Acids.pdf",
+      "Amines.pdf",
+      "Chemical Kinetics.pdf"
+    ],
+    "persona": "Undergraduate Chemistry Student",
+    "job_to_be_done": "Identify key concepts and mechanisms for exam preparation on reaction kinetics",
+    "processing_timestamp": "2025-07-28T05:18:59.466494"
+  },
+  "extracted_sections": [
+    {
+      "document": "Aldehydes, Ketons and Carboxylic Acids.pdf",
+      "section_title": "After studying this Unit, you will be",
+      "importance_rank": 1,
+      "page_number": 1
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "section_title": "83",
+      "importance_rank": 2,
+      "page_number": 23
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "section_title": "71",
+      "importance_rank": 3,
+      "page_number": 11
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "section_title": "Chemistry, by its very nature, is concerned with change.",
+      "importance_rank": 4,
+      "page_number": 1
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "section_title": "69",
+      "importance_rank": 5,
+      "page_number": 9
+    }
+  ],
+  "subsection_analysis": [
+    {
+      "document": "Aldehydes, Ketons and Carboxylic Acids.pdf",
+      "refined_text": "After studying this Unit, you will be\nable to\n\u2022\nwrite the common  and IUPAC\nnames of aldehydes, ketones and\ncarboxylic acids;\n\u2022\nwrite \nthe \nstructures \nof \nthe\ncompounds containing functional\ngroups namely carbonyl and\ncarboxyl groups;\n\u2022\ndescribe the important methods\nof preparation and reactions of\nthese classes of compounds;\n\u2022\ncorrelate physical properties and\nchemical reactions of aldehydes,\nketones and carboxylic acids,\nwith their structures;\n\u2022\nexplain the mechanism of a few\nselected reactions of aldehydes\nand ketones;\n\u2022\nunderstand \nvarious \nfactors\naffecting the acidity of carboxylic\nacids and their reactions;\n\u2022\ndescribe the uses of aldehydes,\nketones and carboxylic acids",
+      "page_number": 1
+    },
+    {
+      "document": "Aldehydes, Ketons and Carboxylic Acids.pdf",
+      "refined_text": "In this Unit, we will study about the\norganic compounds containing carbon-oxygen double\nbond (>C=O) called carbonyl group, which is one of the\nmost important functional groups in organic chemistry",
+      "page_number": 1
+    },
+    {
+      "document": "Aldehydes, Ketons and Carboxylic Acids.pdf",
+      "refined_text": "Objectives\nCarbonyl compounds are of utmost importance to organic\nchemistry",
+      "page_number": 1
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "83\nChemical Kinetics\nassumed to be hard spheres and reaction is postulated to occur when\nmolecules collide with each other",
+      "page_number": 23
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "Another factor which affects the rate of\nchemical reactions is activation energy (as we have already studied)",
+      "page_number": 23
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "For a bimolecular elementary reaction\nA + B   \u00ae   Products\nrate of reaction can be expressed as\na /",
+      "page_number": 23
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "71\nChemical Kinetics\n(iii) For complex reaction, order is given by the slowest step and\nmolecularity of the slowest step is same as the order of the overall\nreaction",
+      "page_number": 11
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "We shall determine these equations only for zero and\nfirst order chemical reactions",
+      "page_number": 11
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "This makes it difficult to determine the rate law and hence\nthe order of the reaction",
+      "page_number": 11
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "Objectives\nChemical Kinetics helps us to understand how chemical reactions\noccur",
+      "page_number": 1
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "All these questions can be answered by\nthe branch of chemistry, which deals with the study\nof reaction rates and their mechanisms, called\nchemical kinetics",
+      "page_number": 1
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "Along with feasibility and extent, it is equally\nimportant to know the rate and the factors controlling\nthe rate of a chemical reaction for its complete\nunderstanding",
+      "page_number": 1
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "The number of reacting species\n(atoms, ions or molecules) taking part in an elementary\nreaction, which must collide simultaneously in order to bring\nabout a chemical reaction is called molecularity of a reaction",
+      "page_number": 9
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": ", oxidation of ethane to CO2\nand H2O passes through a series of intermediate steps in which alcohol,\naldehyde and acid are formed), reverse reactions and side reactions\n(e",
+      "page_number": 9
+    },
+    {
+      "document": "Chemical Kinetics.pdf",
+      "refined_text": "4 Molecularity\nof a\nReaction\nAnother property of a reaction called molecularity helps in\nunderstanding its mechanism",
+      "page_number": 9
+    }
+  ]
+}
